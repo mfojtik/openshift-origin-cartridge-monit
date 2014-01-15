@@ -7,13 +7,12 @@ OPENSHIFT_MONITRC=${OPENSHIFT_DATA_DIR}.monitrc
 
 function update_monitrc() {
   (cat ${OPENSHIFT_MONITRC} | envsubst) > /tmp/monitrc.tmp && mv /tmp/monitrc.tmp ${OPENSHIFT_MONITRC}
-  ln -sf ${OPENSHIFT_DATA_DIR}.monitrc ${OPENSHIFT_HOMEDIR}.monitrc
   chmod 0600 ${OPENSHIFT_MONITRC}
 }
 
 function start() {
   if [ -z "${MONIT_ALERT_EMAIL}" ]; then
-    echo "ERROR: You need to set the MONIT_ALERT_EMAIL before using monit."
+    echo "ERROR: You need to set the MONIT_ALERT_EMAIL before starting monit."
     echo "       rhc env set MONIT_ALERT_EMAIL=your@email.com"
     echo
   else

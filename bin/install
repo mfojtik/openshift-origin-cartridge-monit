@@ -14,12 +14,17 @@ chmod +x ${OPENSHIFT_MONIT_DIR}bin/monit
 popd >/dev/null
 
 mkdir -p ${OPENSHIFT_MONIT_DIR}/run
+mkdir -p ${OPENSHIFT_MONIT_DIR}/log
 mkdir -p ${OPENSHIFT_MONIT_DIR}/var/events
 
+if [ -z "${MONIT_ALERT_EMAIL}" ]; then
+  client_result ""
+  client_result "Please set the email you want to receive monit alerts:"
+  client_result ""
+  client_result "$ rhc env set MONIT_ALERT_EMAIL=email@address.com"
+  client_result "$ rhc cartridge restart monit -a ${OPENSHIFT_APP_NAME}"
+  client_result ""
+fi
+
+client_result "You can add custom monitoring rules into ~/.monitrc file."
 client_result ""
-client_result "Please set the email you want to receive monit alerts:"
-client_result ""
-client_result "$ rhc env set MONIT_ALERT_EMAIL=email@address.com"
-client_result "$ rhc cartridge restart monit -a ${OPENSHIFT_APP_NAME}"
-client_result ""
-client_result "You can also write additional monitoring checks into ~/.monitrc file."
