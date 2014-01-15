@@ -7,6 +7,7 @@ OPENSHIFT_MONITRC=${OPENSHIFT_DATA_DIR}.monitrc
 
 function update_monitrc() {
   (cat ${OPENSHIFT_MONITRC} | envsubst) > /tmp/monitrc.tmp && mv /tmp/monitrc.tmp ${OPENSHIFT_MONITRC}
+  ln -sf ${OPENSHIFT_DATA_DIR}.monitrc ${OPENSHIFT_HOMEDIR}.monitrc
   chmod 0600 ${OPENSHIFT_MONITRC}
 }
 
@@ -16,13 +17,13 @@ function start() {
     echo "       rhc env set MONIT_ALERT_EMAIL=your@email.com"
     echo
   else
-    update_monitrc
     echo "Starting monit cartridge"
-    if [ ! -f ${OPENSHIFT_HOMEDIR}.monitrc ]; then
+    if [ ! -f ${OPENSHIFT_MONITRC} ]; then
       echo "ERROR: Unabled to locate ~/.monitrc file."
       exit 1
     fi
-    ${OPENSHIFT_MONIT_DIR}bin/monit -c ${OPENSHIFT_HOMEDIR}.monitrc
+    update_monitrc
+    ${OPENSHIFT_MONIT_DIR}bin/monit -c ${OPENSHIFT_MONITRC}
   fi
 }
 
