@@ -17,6 +17,10 @@ mkdir -p ${OPENSHIFT_MONIT_DIR}/run
 mkdir -p ${OPENSHIFT_MONIT_DIR}/log
 mkdir -p ${OPENSHIFT_MONIT_DIR}/var/events
 
+# Generate random password for admin interface
+#
+openssl rand -base64 5 2>/dev/null >${OPENSHIFT_MONIT_DIR}env/OPENSHIFT_MONIT_PASSWORD
+
 if [ -z "${MONIT_ALERT_EMAIL}" ]; then
   client_result ""
   client_result "Please set the email you want to receive monit alerts:"
@@ -26,5 +30,9 @@ if [ -z "${MONIT_ALERT_EMAIL}" ]; then
   client_result ""
 fi
 
+client_result "Monit Server Manager is running at: https://${OPENSHIFT_APP_DNS}/monit-status"
+client_result "Username: admin"
+client_result "Password: ${OPENSHIFT_MONIT_PASSWORD}"
+client_result ""
 client_result "You can add custom monitoring rules into ~/.monitrc file."
 client_result ""

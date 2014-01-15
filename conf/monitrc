@@ -14,10 +14,8 @@ set eventqueue
 set mail-format { from: monit@${OPENSHIFT_APP_DNS} }
 set alert ${MONIT_ALERT_EMAIL}
 
-# TODO: Set normal password
-#
 set httpd port ${OPENSHIFT_MONIT_WEB_PORT} and use address ${OPENSHIFT_MONIT_HTTP_IP}
-  allow admin:monit      # require user 'admin' with password 'monit'
+  allow admin:${OPENSHIFT_MONIT_PASSWORD}
 
 # Basic OpenShift monitoring
 
@@ -34,7 +32,7 @@ check program MEMORY_QUOTA with path "${OPENSHIFT_MONIT_DIR}bin/scripts/cgroups-
 check program STORAGE_QUOTA with path "${OPENSHIFT_MONIT_DIR}bin/scripts/quota-check.sh"
   if status > 80 then alert
   if status > 90
-    then exec "${OPENSHIFT_MONIT_DIR}bin/scripts/oo-env.sh '${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control tidy'"
+    then exec "${OPENSHIFT_MONIT_DIR}bin/scripts/oo-env.sh ${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control tidy'
 
 check host ${OPENSHIFT_GEAR_DNS} with address ${OPENSHIFT_GEAR_DNS}
   start program = "${OPENSHIFT_MONIT_DIR}bin/scripts/oo-env.sh ${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control start"
