@@ -17,4 +17,7 @@ used_space=$(get_used_space)
 quota=$(get_quota)
 percentage=$(echo "(${used_space}/${quota})*100" |bc -l|sed 's/^\./0./')
 
-exit ${percentage/\.*}
+current_usage=${percentage/\.*}
+
+echo "Current gear storage usage is ${current_usage}%"
+exit $current_usage

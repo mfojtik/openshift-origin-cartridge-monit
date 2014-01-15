@@ -14,6 +14,7 @@ function start() {
   if [ -z "${MONIT_ALERT_EMAIL}" ]; then
     echo "ERROR: You need to set the MONIT_ALERT_EMAIL before starting monit."
     echo "       rhc env set MONIT_ALERT_EMAIL=your@email.com"
+    echo "       rhc cartridge restart monit -a ${OPENSHIFT_APP_NAME}"
     echo
   else
     echo "Starting monit cartridge"
