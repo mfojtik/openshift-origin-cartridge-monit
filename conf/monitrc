@@ -23,7 +23,7 @@ set httpd port ${OPENSHIFT_MONIT_WEB_PORT} and use address ${OPENSHIFT_MONIT_HTT
 
 check program MEMORY_QUOTA with path "${OPENSHIFT_MONIT_DIR}bin/scripts/cgroups-memory-check.sh"
   start program = "/bin/bash -c '/usr/bin/gear start'"
-  stop  program = "/bin/bash -c '/usr/bin/gear stop"'
+  stop  program = "/bin/bash -c '/usr/bin/gear stop'"
   if status > 80
     then alert
   if status > 90
