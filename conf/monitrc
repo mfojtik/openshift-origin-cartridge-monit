@@ -37,5 +37,5 @@ check program STORAGE_QUOTA with path "${OPENSHIFT_MONIT_DIR}bin/scripts/quota-c
   if status > 80 then alert
   if status > 90
     then exec "${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control tidy"
-  if status > 90 for 5 cycles
+  if status > 90 within 5 cycles
     then timeout
