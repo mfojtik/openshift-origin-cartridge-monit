@@ -21,7 +21,7 @@ if [ -z "${MONIT_ALERT_EMAIL}" ]; then
   client_result ""
   client_result "Please set the email you want to receive monit alerts:"
   client_result ""
-  client_result "$ rhc env set MONIT_ALERT_EMAIL=email@address.com"
+  client_result "$ rhc env set MONIT_ALERT_EMAIL=email@address.com -a ${OPENSHIFT_APP_NAME}"
   client_result "$ rhc cartridge restart monit -a ${OPENSHIFT_APP_NAME}"
   client_result ""
 fi

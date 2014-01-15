@@ -21,4 +21,15 @@ Provides:
 Scaling:
   Min: 1
   Max: 1
+Endpoints:
+- Private-IP-Name: HTTP_IP
+  Private-Port-Name: WEB_PORT
+  Private-Port: 2812
+  Public-Port-Name: WEB_PROXY_PORT
+  Protocols:
+  - http
+  Mappings:
+  - Frontend: '/monit-status'
+    Backend: '/'
+
 Source-Url: https://github.com/mfojtik/openshift-origin-cartridge-monit.git
