@@ -10,6 +10,10 @@ function update_monitrc() {
   chmod 0600 ${OPENSHIFT_MONITRC}
 }
 
+function dump_environment() {
+  env > ${OPENSHIFT_MONIT_DIR}var/env
+}
+
 function start() {
   if [ -z "${MONIT_ALERT_EMAIL}" ]; then
     echo "ERROR: You need to set the MONIT_ALERT_EMAIL before starting monit."
@@ -22,6 +26,8 @@ function start() {
       echo "ERROR: Unabled to locate ~/.monitrc file."
       exit 1
     fi
+    dump_environment  # Save the current 'env' into a file that is later sourced
+                      # to monit start/stop scripts
     update_monitrc
     ${OPENSHIFT_MONIT_DIR}bin/monit -c ${OPENSHIFT_MONITRC}
   fi
@@ -45,6 +51,7 @@ function status() {
 
 function reload() {
     client_result "Reloading monit cart"
+    dump_environment
     kill -1 `cat ${OPENSHIFT_MONIT_PIDFILE}`
 }
 
