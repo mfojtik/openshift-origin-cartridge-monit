@@ -12,6 +12,4 @@ if [ ! -f ~/monit/var/env ]; then
   exit 1
 fi
 
-source ~/monit/var/env
-
-"$@" >>${OPENSHIFT_MONIT_DIR}log/monit.log 2>&1
+( export `cat ~/monit/var/env` && "$@" >>${OPENSHIFT_MONIT_DIR}log/monit.log 2>&1 )
