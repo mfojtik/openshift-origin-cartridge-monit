@@ -14,4 +14,4 @@ fi
 
 source ~/monit/var/env
 
-exec "$@" >>${OPENSHIFT_MONIT_DIR}log/monit.log 2>&1
+"$@" >>${OPENSHIFT_MONIT_DIR}log/monit.log 2>&1
