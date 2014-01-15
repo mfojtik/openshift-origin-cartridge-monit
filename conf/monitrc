@@ -37,7 +37,7 @@ check program STORAGE_QUOTA with path "${OPENSHIFT_MONIT_DIR}bin/scripts/quota-c
     then exec "/bin/bash -c '${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control tidy'"
 
 check host ${OPENSHIFT_GEAR_DNS} with address ${OPENSHIFT_GEAR_DNS}
-  start program = "/bin/bash -c '${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control start'"
-  stop program = "/bin/bash -c '${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control stop'"
-  if failed port 80 protocol http for 3 cycles then restart
-  if 2 restarts within 6 cycles then timeout
+  start program = "/bin/bash -c '${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control start' >> ${OPENSHIFT_MONIT_DIR}log/monit.log 2>&1"
+  stop program = "/bin/bash -c '${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control stop' >> ${OPENSHIFT_MONIT_DIR}log/monit.log 2>&1"
+  if failed port 80 protocol http for 2 cycles then restart
+  if 2 restarts within 4 cycles then timeout
