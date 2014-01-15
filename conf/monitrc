@@ -10,7 +10,7 @@ set eventqueue
   basedir ${OPENSHIFT_MONIT_DIR}var/events
   slots 100
 
-set mail-format { from: monit@${OPENSHIFT_MONIT_DIR} }
+set mail-format { from: monit@${OPENSHIFT_APP_DNS} }
 set alert ${MONIT_ALERT_EMAIL}
 
 # TBD;
@@ -26,12 +26,16 @@ set alert ${MONIT_ALERT_EMAIL}
 check program MEMORY_QUOTA with path "${OPENSHIFT_MONIT_DIR}bin/scripts/cgroups-memory-check.sh"
   start program = "/usr/bin/gear start"
   stop  program = "/usr/bin/gear stop"
-  if status > 80 then alert
-  if status > 90 then restart
-  if 5 restarts within 5 cycles then timeout
+  if status > 80
+    then alert
+  if status > 90
+    then restart
+  if 5 restarts within 5 cycles
+    then timeout
 
 check program STORAGE_QUOTA with path "${OPENSHIFT_MONIT_DIR}bin/scripts/quota-check.sh"
   if status > 80 then alert
   if status > 90
     then exec "${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}bin/control tidy"
-  if status > 90 for 5 cycles then timeout
+  if status > 90 for 5 cycles
+    then timeout
