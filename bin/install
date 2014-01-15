@@ -16,6 +16,11 @@ popd >/dev/null
 mkdir -p ${OPENSHIFT_MONIT_DIR}/run
 mkdir -p ${OPENSHIFT_MONIT_DIR}/var/events
 
+# Clean up after previous unsuccessfull installation
+#
+[ -f "${OPENSHIFT_DATA_DIR}.monitrc" ] && rm -f ${OPENSHIFT_DATA_DIR}.monitrc
+[ -f "${OPENSHIFT_HOMEDIR}.monitrc" ] && rm -f ${OPENSHIFT_HOMEDIR}.monitrc
+
 client_result ""
 client_result "Please set the email you want to receive monit alerts:"
 client_result ""
