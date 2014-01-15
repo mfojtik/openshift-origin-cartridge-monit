@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+MONIT_DOWNLOAD_URL="http://mmonit.com/monit/dist/binary/5.6/monit-5.6-linux-x64.tar.gz"
+
+# Download the precompiled monit binary
+#
+pushd /tmp >/dev/null
+curl -s $MONIT_DOWNLOAD_URL | tar --strip-components=1 --wildcards -xzf - '*/bin/monit'
+mv -vf ./bin/monit ${OPENSHIFT_MONIT_DIR}bin/monit
+rm -rf ./bin
+chmod +x ${OPENSHIFT_MONIT_DIR}bin/monit
+popd >/dev/null
+
+mkdir -p ${OPENSHIFT_MONIT_DIR}/run
+mkdir -p ${OPENSHIFT_MONIT_DIR}/var/events
+
+client_result ""
+client_result "Please set the email you want to receive monit alerts:"
+client_result ""
+client_result "$ rhc env set MONIT_ALERT_EMAIL=email@address.com"
+client_result "$ rhc cartridge restart monit -a ${OPENSHIFT_APP_NAME}"
+client_result ""
+client_result "You can also write additional monitoring checks into ~/.monitrc file."

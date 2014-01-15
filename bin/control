@@ -1,0 +1,52 @@
+#!/bin/bash
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+OPENSHIFT_MONIT_PIDFILE=${OPENSHIFT_MONIT_DIR}run/monit.pid
+
+function start() {
+  if [ -z "${MONIT_ALERT_EMAIL}" ]; then
+    echo "ERROR: You need to set the MONIT_ALERT_EMAIL before using monit."
+    echo "       rhc env set MONIT_ALERT_EMAIL=your@email.com"
+    echo
+  else
+    echo "Starting monit cartridge"
+    ${OPENSHIFT_MONIT_DIR}bin/monit -c ${OPENSHIFT_HOMEDIR}/.monitrc
+  fi
+}
+
+function stop() {
+  if [ -f "${OPENSHIFT_MONIT_PIDFILE}" ]; then
+    echo "Stopping monit cartridge"
+    kill -15 `cat ${OPENSHIFT_MONIT_PIDFILE}`
+  fi
+}
+
+function restart() {
+    stop
+    start
+}
+
+function status() {
+  return 0
+}
+
+function reload() {
+    client_result "Reloading monit cart"
+    kill -1 `cat ${OPENSHIFT_MONIT_PIDFILE}`
+}
+
+function tidy() {
+  echo "ENothing to clean for monit."
+}
+
+case "$1" in
+  start) start ;;
+  stop) stop ;;
+  restart) restart ;;
+  status) status ;;
+  reload) reload ;;
+  tidy) tidy ;;
+  *) exit 0
+esac
+

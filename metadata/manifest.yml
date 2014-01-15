@@ -1,0 +1,24 @@
+---
+Name: monit
+Cartridge-Short-Name: MONIT
+Architecture: x86_64
+Display-Name: monit 5.6
+Description: Monit is an open source utility for managing and monitoring, processes, programs, files, directories and filesystems
+Version: '5.6'
+Versions:
+- '5.6'
+Cartridge-Version: 0.0.1
+Cartridge-Vendor: mfojtik
+License: GPL
+Vendor: mfojtik
+Categories:
+- service
+- embedded
+Website: http://collectd.org
+Provides:
+- monit-5.6
+- monit
+Scaling:
+  Min: 1
+  Max: 1
+Source-Url: https://github.com/mfojtik/openshift-origin-cartridge-monit.git

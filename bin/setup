@@ -1,0 +1,3 @@
+#!/bin/sh
+
+oo-erb ${OPENSHIFT_MONIT_DIR}conf/monitrc.erb > ${OPENSHIFT_HOMEDIR}/.monitrc

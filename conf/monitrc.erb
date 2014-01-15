@@ -1,0 +1,37 @@
+set daemon  60              # check services at 1-minute intervals
+
+set idfile <%=ENV['OPENSHIFT_MONIT_DIR']%>run/monit.id
+set statefile <%=ENV['OPENSHIFT_MONIT_DIR']%>run/monit.state
+set pidfile <%=ENV['OPENSHIFT_MONIT_DIR']%>run/monit.pid
+
+set mailserver localhost
+
+set eventqueue
+  basedir <%ENV['OPENSHIFT_MONIT_DIR']%>var/events
+  slots 100
+
+set mail-format { from: monit@<%=ENV['OPENSHIFT_GEAR_DNS']%> }
+set alert <%=ENV['MONIT_ALERT_EMAIL']%>
+
+# TBD;
+# set httpd port 2812 and
+#    use address localhost  # only accept connection from localhost
+#    allow localhost        # allow localhost to connect to the server and
+#    allow admin:monit      # require user 'admin' with password 'monit'
+#    allow @monit           # allow users of group 'monit' to connect (rw)
+#    allow @users readonly  # allow users of group 'users' to connect readonly
+
+# Basic OpenShift monitoring
+
+check program MEMORY_QUOTA with path "<%=ENV['OPENSHIFT_MONIT_DIR']%>bin/scripts/cgroups-memory-check.sh"
+  start program = "/usr/bin/gear start"
+  stop  program = "/usr/bin/gear stop"
+  if status > 80 then alert
+  if status > 90 then restart
+  if 5 restarts within 5 cycles then timeout
+
+check program STORAGE_QUOTA with path "<%=ENV['OPENSHIFT_MONIT_DIR']%>bin/scripts/quota-check.sh"
+  if status > 80 then alert
+  if status > 90
+    then exec "<%=ENV['OPENSHIFT_PRIMARY_CARTRIDGE_DIR']%>bin/control tidy"
+  if status > 90 for 5 cycles then timeout
