@@ -3,7 +3,7 @@ set daemon  60              # check services at 1-minute intervals
 set idfile ${OPENSHIFT_MONIT_DIR}run/monit.id
 set statefile ${OPENSHIFT_MONIT_DIR}run/monit.state
 set pidfile ${OPENSHIFT_MONIT_DIR}run/monit.pid
-set logfile ${OPENSHIFT_MONIT_DIR}/log/monit.log
+set logfile ${OPENSHIFT_MONIT_DIR}log/monit.log
 
 set mailserver localhost
 

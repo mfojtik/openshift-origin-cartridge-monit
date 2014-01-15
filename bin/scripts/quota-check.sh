@@ -16,4 +16,5 @@ function get_quota() {
 used_space=$(get_used_space)
 quota=$(get_quota)
 percentage=$(echo "(${used_space}/${quota})*100" |bc -l|sed 's/^\./0./')
-echo ${percentage/\.*}
+
+exit ${percentage/\.*}
