@@ -1,0 +1,3 @@
+#!/bin/sh
+
+${OPENSHIFT_PRIMARY_CARTRIDGE_DIR}/bin/control stop >> ${OPENSHIFT_MONIT_DIR}log/monit.log 2>&1
