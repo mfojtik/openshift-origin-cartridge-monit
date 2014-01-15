@@ -20,6 +20,7 @@ mkdir -p ${OPENSHIFT_MONIT_DIR}/var/events
 # Generate random password for admin interface
 #
 openssl rand -base64 5 2>/dev/null >${OPENSHIFT_MONIT_DIR}env/OPENSHIFT_MONIT_PASSWORD
+export OPENSHIFT_MONIT_PASSWORD=`cat ${OPENSHIFT_MONIT_DIR}env/OPENSHIFT_MONIT_PASSWORD`
 
 if [ -z "${MONIT_ALERT_EMAIL}" ]; then
   client_result ""
