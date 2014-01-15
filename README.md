@@ -8,7 +8,7 @@ Users can configure alert email to receive notifications. To do so, you need
 to set `MONIT_ALERT_EMAIL` before installing the cartridge:
 
 ```
-rhc env set MONIT_ALERT_EMAIL=my@email.com
+rhc env set MONIT_ALERT_EMAIL=my@email.com -a YOUR_APP
 ```
 
 After this, you can add this cartridge to your application:
